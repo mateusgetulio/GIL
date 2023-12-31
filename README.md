@@ -1,11 +1,18 @@
 # Get in Line - GIL #
 Contributors: Mateus Getulio Vieira
+
 Tags: Queue, Line, Limit access, maximum, capacity, simultaneously, access, accesses, limitation, session
+
 Requires at least: 5.6
+
 Tested up to: 6.2
+
 Stable tag: 1.0.0
+
 License: GPLv3
+
 Requires PHP: 5.6
+
 
 Get in Line
 
