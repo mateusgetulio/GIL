@@ -1,4 +1,4 @@
-=== Get in Line - GIL ===
+### Get in Line - GIL ###
 Contributors: Mateus Getulio Vieira
 Tags: Queue, Line, Limit access, maximum, capacity, simultaneously, access, accesses, limitation, session
 Requires at least: 5.6
@@ -9,7 +9,7 @@ Requires PHP: 5.6
 
 Get in Line
 
-== Description ==
+## Description ##
 
 What happens when you're expecting a great number of visitors, higher than your server can handle at that particular time? 
 
@@ -29,7 +29,7 @@ After installation you'll see a new settings page added to your backend, in ther
 
 Just try it out! You'll love it :)
 
-== Installation ==
+## Installation ##
 
 = Admin Installer via search =
 1. Visit the Add New plugin screen and search for "Get in Line".
@@ -44,7 +44,7 @@ Just try it out! You'll love it :)
 4. Once uploading is done, activate "Get in Line".
 5. The plugin should be shown below the settings menu.
 
-== Frequently Asked Questions ==
+## Frequently Asked Questions ##
 
 = Can I customize the waiting lobby page? =
 In the upcoming versions there's going to be an editor available in the settings page, please stay tuned. As of now, you can customize it by updating the lobby.php file inside the plugin.
@@ -64,6 +64,6 @@ Currently the only way for a session to end is when it expires based on the expi
 = Is the plugin also available in my language? =
 So far we the plugin is only available in English. But all texts are inserted into GIL's domain allowing translations to be made. Upcoming versions will count with more languages by default.
 
-== Changelog ==
+## Changelog ##
 = 1.0.0 =
 * Initial release
