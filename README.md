@@ -1,4 +1,4 @@
-### Get in Line - GIL ###
+# Get in Line - GIL #
 Contributors: Mateus Getulio Vieira
 Tags: Queue, Line, Limit access, maximum, capacity, simultaneously, access, accesses, limitation, session
 Requires at least: 5.6
