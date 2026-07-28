@@ -58,6 +58,10 @@ It is a simple upper-bound estimate: your position divided by the visitor limit,
 
 In a dedicated database table. The settings page shows live admitted and waiting counts and has a button to clear the queue.
 
+= Does the plugin collect any personal data or contact external servers? =
+
+No. The plugin makes no external requests of any kind, includes no analytics, and collects no personal data. The visitor cookie contains only a random identifier and a signature, nothing identifying, and the queue table stores that identifier with timestamps. Uninstalling removes the table and all plugin options.
+
 = Does it work with page caching? =
 
 Only requests that reach PHP can be queued. If a full-page cache or CDN answers a request by itself, the waiting room never sees it.
