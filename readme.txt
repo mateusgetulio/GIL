@@ -2,7 +2,7 @@
 Contributors: mateusgetulio
 Tags: waiting room, queue, traffic, capacity, high traffic
 Requires at least: 5.9
-Tested up to: 6.8
+Tested up to: 7.0
 Stable tag: 2.0.0
 Requires PHP: 7.4
 License: GPLv3
