@@ -26,8 +26,8 @@ Round 2 (September 2023):
 | Finding | v2.0.0 status |
 |---|---|
 | Writing the global `rewrite_rules` option | Fixed. Removed entirely |
-| Variables passed to gettext functions, concatenated translatable strings | Fixed. All i18n calls use literal strings and the `get-in-line` domain |
-| Text domain must match the plugin slug | `get-in-line` everywhere, and the submission email must explicitly request the permalink `get-in-line` (see below) |
+| Variables passed to gettext functions, concatenated translatable strings | Fixed. All i18n calls use literal strings and the `gil-waiting-room` domain |
+| Text domain must match the plugin slug | `gil-waiting-room` everywhere, matching the slug that derives from the plugin name (see below) |
 | Unsanitized `$_SESSION` return | Fixed. PHP sessions are gone; the cookie is sanitized, format-validated, and HMAC-verified before use |
 | Interpolated value inside a prepared query | Fixed. No interpolated values remain in any query |
 | Unescaped echoes in the lobby | Fixed. All lobby output is escaped |
@@ -36,7 +36,7 @@ Round 2 (September 2023):
 
 1. Confirm the WordPress.org account (the 2023 review ran under mateus.getulio@gmail.com) and update `Contributors:` in `readme.txt` to the exact .org username.
 2. Verify `Tested up to:` against the current WordPress release and actually smoke-test on it (wp-env makes this a one-line version bump).
-3. Decide the permalink and state it explicitly in the submission: request `get-in-line`; the 2023 review had assigned `get-in-line-gil`, and if `get-in-line` is unavailable, the text domain must be changed to match whatever slug is granted before approval.
+3. The public name is "GIL Waiting Room" and the slug derives from it automatically (`gil-waiting-room`), with text domain and admin slug already matching. The original "Get in Line" name collides with an abandoned 2018 booking plugin that owns `get-in-line`, so it cannot be used.
 4. Prepare .org listing assets (kept out of the plugin zip): `screenshot-1.png` (lobby), `screenshot-2.png` (settings), optional banner and icon. The Playwright screenshot job already produces the raw captures.
 5. Build the distribution zip from a clean export: plugin PHP, views, `readme.txt`, `LICENSE`, `uninstall.php`. Exclude development files (`node_modules`, `tests`, `docs`, CI config, `package.json`, `.wp-env.json`, `playwright*`); a `.distignore` covers this.
 6. One plugin per account can be in review at a time, and the current queue takes weeks. Reply promptly to every review email; silence is what killed the 2023 submission.

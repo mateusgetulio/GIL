@@ -21,7 +21,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="get-in-line"/>
+				<element value="gil-waiting-room"/>
 			</property>
 		</properties>
 	</rule>

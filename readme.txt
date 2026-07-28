@@ -1,4 +1,4 @@
-=== Get in Line ===
+=== GIL Waiting Room ===
 Contributors: mateusgetulio
 Tags: waiting room, queue, traffic, capacity, high traffic
 Requires at least: 5.9
@@ -14,7 +14,7 @@ A virtual waiting room for WordPress. Caps concurrent visitors at a limit you ch
 
 What happens when a sale, a campaign, or a viral post sends more visitors than your server can comfortably handle?
 
-Get in Line creates a virtual waiting room in front of your site. You choose how many visitors may browse at the same time; everyone above that limit is placed in a fair, first-come-first-served queue and sees a clean lobby page with their live position and an estimated wait. As soon as a spot opens, the next visitor in line is admitted automatically, no refresh or action needed.
+GIL Waiting Room creates a virtual waiting room in front of your site. You choose how many visitors may browse at the same time; everyone above that limit is placed in a fair, first-come-first-served queue and sees a clean lobby page with their live position and an estimated wait. As soon as a spot opens, the next visitor in line is admitted automatically, no refresh or action needed.
 
 = How it works =
 
@@ -29,7 +29,7 @@ Get in Line creates a virtual waiting room in front of your site. You choose how
 
 = What this plugin is not =
 
-Get in Line manages capacity, it is not DDoS protection. Requests still reach PHP; the plugin decides who may browse. If you are under attack, you need protection at the network or CDN layer.
+GIL Waiting Room manages capacity, it is not DDoS protection. Requests still reach PHP; the plugin decides who may browse. If you are under attack, you need protection at the network or CDN layer.
 
 If a full-page cache or CDN serves your pages without hitting PHP, those cached hits cannot be queued. The waiting room works for requests that reach WordPress.
 
@@ -37,7 +37,7 @@ If a full-page cache or CDN serves your pages without hitting PHP, those cached 
 
 1. Upload the plugin to `/wp-content/plugins/`, or install it through the WordPress plugins screen.
 2. Activate the plugin.
-3. Open the "Get in Line" menu in your admin sidebar.
+3. Open the "GIL Waiting Room" menu in your admin sidebar.
 4. Set the concurrent visitor limit and session length, then enable the waiting room.
 
 == Frequently Asked Questions ==

@@ -1,7 +1,7 @@
 const { test, expect } = require( '@playwright/test' );
 const { setOptions, resetQueue, loginAsAdmin } = require( './helpers' );
 
-const SETTINGS_URL = '/wp-admin/admin.php?page=get-in-line';
+const SETTINGS_URL = '/wp-admin/admin.php?page=gil-waiting-room';
 
 test.describe( 'Settings page', () => {
 	test.beforeEach( async ( { page } ) => {

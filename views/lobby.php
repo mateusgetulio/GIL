@@ -16,7 +16,7 @@ $get_in_line_favicon    = 'data:image/svg+xml,' . rawurlencode( '<svg xmlns="htt
 	<meta name="robots" content="noindex" />
 	<meta name="color-scheme" content="dark light" />
 	<link rel="icon" href="<?php echo esc_url( $get_in_line_favicon ); ?>" />
-	<title><?php echo esc_html( get_bloginfo( 'name' ) ); ?> &middot; <?php esc_html_e( 'Waiting room', 'get-in-line' ); ?></title>
+	<title><?php echo esc_html( get_bloginfo( 'name' ) ); ?> &middot; <?php esc_html_e( 'Waiting room', 'gil-waiting-room' ); ?></title>
 	<style>
 		:root {
 			--gil-bg-1: #1e293b;
@@ -209,17 +209,17 @@ $get_in_line_favicon    = 'data:image/svg+xml,' . rawurlencode( '<svg xmlns="htt
 	<main class="gil-card">
 		<div class="gil-mark"><?php echo $get_in_line_mark_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 		<div class="gil-site"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></div>
-		<h1 id="gil-heading"><?php echo 1 === (int) $position ? esc_html__( 'You’re next', 'get-in-line' ) : esc_html__( 'You are in line', 'get-in-line' ); ?></h1>
-		<p class="gil-lead" id="gil-lead"><?php echo 1 === (int) $position ? esc_html__( 'A spot is opening up for you. Hang tight, this page will refresh on its own.', 'get-in-line' ) : esc_html__( 'We are welcoming a high number of visitors right now. To keep the site fast for everyone, access is briefly limited. Your spot is saved.', 'get-in-line' ); ?></p>
+		<h1 id="gil-heading"><?php echo 1 === (int) $position ? esc_html__( 'You’re next', 'gil-waiting-room' ) : esc_html__( 'You are in line', 'gil-waiting-room' ); ?></h1>
+		<p class="gil-lead" id="gil-lead"><?php echo 1 === (int) $position ? esc_html__( 'A spot is opening up for you. Hang tight, this page will refresh on its own.', 'gil-waiting-room' ) : esc_html__( 'We are welcoming a high number of visitors right now. To keep the site fast for everyone, access is briefly limited. Your spot is saved.', 'gil-waiting-room' ); ?></p>
 
 		<div class="gil-stats">
 			<div class="gil-stat">
 				<div class="gil-stat-value" id="gil-position"><?php echo esc_html( $position ); ?></div>
-				<div class="gil-stat-label"><?php esc_html_e( 'Place in line', 'get-in-line' ); ?></div>
+				<div class="gil-stat-label"><?php esc_html_e( 'Place in line', 'gil-waiting-room' ); ?></div>
 			</div>
 			<div class="gil-stat">
-				<div class="gil-stat-value"><span id="gil-wait"><?php echo esc_html( $estimated_wait_minutes ); ?></span><span class="gil-stat-unit"> <?php esc_html_e( 'min', 'get-in-line' ); ?></span></div>
-				<div class="gil-stat-label"><?php esc_html_e( 'Estimated wait', 'get-in-line' ); ?></div>
+				<div class="gil-stat-value"><span id="gil-wait"><?php echo esc_html( $estimated_wait_minutes ); ?></span><span class="gil-stat-unit"> <?php esc_html_e( 'min', 'gil-waiting-room' ); ?></span></div>
+				<div class="gil-stat-label"><?php esc_html_e( 'Estimated wait', 'gil-waiting-room' ); ?></div>
 			</div>
 		</div>
 
@@ -231,10 +231,10 @@ $get_in_line_favicon    = 'data:image/svg+xml,' . rawurlencode( '<svg xmlns="htt
 				<circle class="gil-ring-track" r="6" cx="8" cy="8"></circle>
 				<circle class="gil-ring-progress" r="6" cx="8" cy="8"></circle>
 			</svg>
-			<span id="gil-meta-label"><?php esc_html_e( 'Checking automatically, no need to refresh', 'get-in-line' ); ?></span>
+			<span id="gil-meta-label"><?php esc_html_e( 'Checking automatically, no need to refresh', 'gil-waiting-room' ); ?></span>
 		</div>
 
-		<p class="gil-fine"><?php esc_html_e( 'You can leave and come back without losing your place.', 'get-in-line' ); ?></p>
+		<p class="gil-fine"><?php esc_html_e( 'You can leave and come back without losing your place.', 'gil-waiting-room' ); ?></p>
 		<p class="gil-visually-hidden" role="status" id="gil-live-status"></p>
 	</main>
 
@@ -248,17 +248,17 @@ $get_in_line_favicon    = 'data:image/svg+xml,' . rawurlencode( '<svg xmlns="htt
 					'endpoint' => esc_url_raw( $status_endpoint ),
 					'siteName' => get_bloginfo( 'name' ),
 					'strings'  => array(
-						'inLine'       => __( 'You are in line', 'get-in-line' ),
-						'next'         => __( 'You’re next', 'get-in-line' ),
-						'nextLead'     => __( 'A spot is opening up for you. Hang tight, this page will refresh on its own.', 'get-in-line' ),
-						'admitted'     => __( 'You’re in', 'get-in-line' ),
-						'admittedLead' => __( 'Taking you to the site now.', 'get-in-line' ),
-						'checking'     => __( 'Checking automatically, no need to refresh', 'get-in-line' ),
-						'offline'      => __( 'Connection lost, retrying automatically', 'get-in-line' ),
+						'inLine'       => __( 'You are in line', 'gil-waiting-room' ),
+						'next'         => __( 'You’re next', 'gil-waiting-room' ),
+						'nextLead'     => __( 'A spot is opening up for you. Hang tight, this page will refresh on its own.', 'gil-waiting-room' ),
+						'admitted'     => __( 'You’re in', 'gil-waiting-room' ),
+						'admittedLead' => __( 'Taking you to the site now.', 'gil-waiting-room' ),
+						'checking'     => __( 'Checking automatically, no need to refresh', 'gil-waiting-room' ),
+						'offline'      => __( 'Connection lost, retrying automatically', 'gil-waiting-room' ),
 						/* translators: 1: place in line, 2: estimated wait in minutes. */
-						'status'       => __( 'You are number %1$s in line. Estimated wait %2$s minutes.', 'get-in-line' ),
+						'status'       => __( 'You are number %1$s in line. Estimated wait %2$s minutes.', 'gil-waiting-room' ),
 						/* translators: %1$s: place in line, shown in the browser tab title. */
-						'titleWaiting' => __( '#%1$s in line', 'get-in-line' ),
+						'titleWaiting' => __( '#%1$s in line', 'gil-waiting-room' ),
 					),
 				)
 			);

@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Get in Line
+ * Plugin Name: GIL Waiting Room
  * Plugin URI: https://github.com/mateusgetulio/GIL
  * Description: A virtual waiting room for WordPress. Caps concurrent visitors at a configurable limit and places everyone else in a FIFO queue with live position updates.
  * Version: 2.0.0
@@ -10,7 +10,7 @@
  * Author URI: https://mateusgetulio.com
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain: get-in-line
+ * Text Domain: gil-waiting-room
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

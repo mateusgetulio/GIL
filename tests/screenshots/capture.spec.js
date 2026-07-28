@@ -13,7 +13,7 @@ test.describe( 'Screenshot capture', () => {
 		wpCli( [ 'option', 'update', 'blogname', 'Northwind Records' ] );
 		try {
 			await loginAsAdmin( page );
-			await page.goto( '/wp-admin/admin.php?page=get-in-line' );
+			await page.goto( '/wp-admin/admin.php?page=gil-waiting-room' );
 			const previewUrl = await page.locator( '.gil-preview-link' ).getAttribute( 'href' );
 
 			await page.setViewportSize( { width: 1280, height: 800 } );
@@ -46,7 +46,7 @@ test.describe( 'Screenshot capture', () => {
 
 		await loginAsAdmin( page );
 		await page.setViewportSize( { width: 1280, height: 900 } );
-		await page.goto( '/wp-admin/admin.php?page=get-in-line' );
+		await page.goto( '/wp-admin/admin.php?page=gil-waiting-room' );
 		await page.screenshot( { path: `${ OUTPUT_DIR }/settings.png` } );
 
 		await admittedContext.close();

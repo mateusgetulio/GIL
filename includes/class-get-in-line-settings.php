@@ -17,10 +17,10 @@ class Get_In_Line_Settings {
 
 	public function add_menu() {
 		$this->page_hook = add_menu_page(
-			esc_html__( 'Get in Line', 'get-in-line' ),
-			esc_html__( 'Get in Line', 'get-in-line' ),
+			esc_html__( 'GIL Waiting Room', 'gil-waiting-room' ),
+			esc_html__( 'GIL Waiting Room', 'gil-waiting-room' ),
 			'manage_options',
-			'get-in-line',
+			'gil-waiting-room',
 			array( $this, 'render_settings_page' ),
 			'dashicons-groups'
 		);
@@ -53,11 +53,11 @@ class Get_In_Line_Settings {
 				'endpoint' => esc_url_raw( rest_url( 'get-in-line/v1/admin/status' ) ),
 				'nonce'    => wp_create_nonce( 'wp_rest' ),
 				'strings'  => array(
-					'justNow'      => __( 'Updated just now', 'get-in-line' ),
+					'justNow'      => __( 'Updated just now', 'gil-waiting-room' ),
 					/* translators: %d: number of seconds. */
-					'secondsAgo'   => __( 'Updated %ds ago', 'get-in-line' ),
+					'secondsAgo'   => __( 'Updated %ds ago', 'gil-waiting-room' ),
 					/* translators: 1: admitted visitor count, 2: waiting visitor count. */
-					'announcement' => __( '%1$s visitors admitted, %2$s waiting in line.', 'get-in-line' ),
+					'announcement' => __( '%1$s visitors admitted, %2$s waiting in line.', 'gil-waiting-room' ),
 				),
 			)
 		);
@@ -72,34 +72,34 @@ class Get_In_Line_Settings {
 
 		add_settings_section(
 			'get_in_line_main_section',
-			esc_html__( 'Waiting room settings', 'get-in-line' ),
+			esc_html__( 'Waiting room settings', 'gil-waiting-room' ),
 			null,
-			'get-in-line'
+			'gil-waiting-room'
 		);
 
 		add_settings_field(
 			'gil_enabled',
-			esc_html__( 'Enabled', 'get-in-line' ),
+			esc_html__( 'Enabled', 'gil-waiting-room' ),
 			array( $this, 'render_enabled_field' ),
-			'get-in-line',
+			'gil-waiting-room',
 			'get_in_line_main_section',
 			array( 'label_for' => 'gil_enabled' )
 		);
 
 		add_settings_field(
 			'gil_limit',
-			esc_html__( 'Concurrent visitor limit', 'get-in-line' ),
+			esc_html__( 'Concurrent visitor limit', 'gil-waiting-room' ),
 			array( $this, 'render_limit_field' ),
-			'get-in-line',
+			'gil-waiting-room',
 			'get_in_line_main_section',
 			array( 'label_for' => 'gil_limit' )
 		);
 
 		add_settings_field(
 			'gil_expiration',
-			esc_html__( 'Session length (minutes)', 'get-in-line' ),
+			esc_html__( 'Session length (minutes)', 'gil-waiting-room' ),
 			array( $this, 'render_expiration_field' ),
-			'get-in-line',
+			'gil-waiting-room',
 			'get_in_line_main_section',
 			array( 'label_for' => 'gil_expiration' )
 		);
@@ -109,8 +109,8 @@ class Get_In_Line_Settings {
 		$options = Get_In_Line_Options::all();
 		?>
 		<input type="checkbox" name="<?php echo esc_attr( Get_In_Line_Options::OPTION_KEY ); ?>[gil_enabled]" id="gil_enabled" value="1" <?php checked( 1, (int) $options['gil_enabled'] ); ?> />
-		<label for="gil_enabled"><?php esc_html_e( 'Limit concurrent access to the site', 'get-in-line' ); ?></label>
-		<p class="description"><?php esc_html_e( 'Logged-in administrators are never sent to the waiting room, so you cannot lock yourself out.', 'get-in-line' ); ?></p>
+		<label for="gil_enabled"><?php esc_html_e( 'Limit concurrent access to the site', 'gil-waiting-room' ); ?></label>
+		<p class="description"><?php esc_html_e( 'Logged-in administrators are never sent to the waiting room, so you cannot lock yourself out.', 'gil-waiting-room' ); ?></p>
 		<?php
 	}
 
@@ -118,7 +118,7 @@ class Get_In_Line_Settings {
 		$options = Get_In_Line_Options::all();
 		?>
 		<input type="number" min="1" step="1" class="small-text" name="<?php echo esc_attr( Get_In_Line_Options::OPTION_KEY ); ?>[gil_limit]" id="gil_limit" value="<?php echo esc_attr( $options['gil_limit'] ); ?>">
-		<p class="description"><?php esc_html_e( 'How many visitors may browse the site at the same time. Start around 100 for typical shared hosting and adjust based on your server.', 'get-in-line' ); ?></p>
+		<p class="description"><?php esc_html_e( 'How many visitors may browse the site at the same time. Start around 100 for typical shared hosting and adjust based on your server.', 'gil-waiting-room' ); ?></p>
 		<?php
 	}
 
@@ -126,7 +126,7 @@ class Get_In_Line_Settings {
 		$options = Get_In_Line_Options::all();
 		?>
 		<input type="number" min="1" step="1" class="small-text" name="<?php echo esc_attr( Get_In_Line_Options::OPTION_KEY ); ?>[gil_expiration]" id="gil_expiration" value="<?php echo esc_attr( $options['gil_expiration'] ); ?>">
-		<p class="description"><?php esc_html_e( 'How long an admitted visitor keeps their spot before it is freed for the next in line. Shorter sessions move the line faster.', 'get-in-line' ); ?></p>
+		<p class="description"><?php esc_html_e( 'How long an admitted visitor keeps their spot before it is freed for the next in line. Shorter sessions move the line faster.', 'gil-waiting-room' ); ?></p>
 		<?php
 	}
 
@@ -146,7 +146,7 @@ class Get_In_Line_Settings {
 			add_settings_error(
 				Get_In_Line_Options::OPTION_KEY,
 				'get_in_line_limit_invalid',
-				esc_html__( 'The visitor limit must be a whole number greater than zero. The previous value was kept.', 'get-in-line' )
+				esc_html__( 'The visitor limit must be a whole number greater than zero. The previous value was kept.', 'gil-waiting-room' )
 			);
 			return $old;
 		}
@@ -157,7 +157,7 @@ class Get_In_Line_Settings {
 			add_settings_error(
 				Get_In_Line_Options::OPTION_KEY,
 				'get_in_line_expiration_invalid',
-				esc_html__( 'The session length must be a whole number of minutes greater than zero. The previous value was kept.', 'get-in-line' )
+				esc_html__( 'The session length must be a whole number of minutes greater than zero. The previous value was kept.', 'gil-waiting-room' )
 			);
 			return $old;
 		}
@@ -168,7 +168,7 @@ class Get_In_Line_Settings {
 
 	public function handle_clear_queue() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You are not allowed to clear the queue.', 'get-in-line' ) );
+			wp_die( esc_html__( 'You are not allowed to clear the queue.', 'gil-waiting-room' ) );
 		}
 
 		check_admin_referer( 'get_in_line_clear_queue' );
@@ -181,7 +181,7 @@ class Get_In_Line_Settings {
 					'get-in-line-cleared' => $cleared ? '1' : '0',
 					'_wpnonce'            => wp_create_nonce( 'get_in_line_notice' ),
 				),
-				admin_url( 'admin.php?page=get-in-line' )
+				admin_url( 'admin.php?page=gil-waiting-room' )
 			)
 		);
 		exit;

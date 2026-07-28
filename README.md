@@ -1,6 +1,6 @@
-# Get in Line
+# GIL Waiting Room
 
-A virtual waiting room for WordPress. When traffic exceeds what your server can comfortably handle, Get in Line caps how many visitors browse at once and places everyone else in a fair, first-come-first-served queue with live position updates and automatic admission.
+A virtual waiting room for WordPress (the project formerly known as Get in Line). When traffic exceeds what your server can comfortably handle, Get in Line caps how many visitors browse at once and places everyone else in a fair, first-come-first-served queue with live position updates and automatic admission.
 
 [![CI](https://github.com/mateusgetulio/GIL/actions/workflows/ci.yml/badge.svg)](https://github.com/mateusgetulio/GIL/actions/workflows/ci.yml)
 
