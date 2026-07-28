@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<ruleset name="Get in Line">
+	<description>Coding standards for the Get in Line plugin.</description>
+
+	<file>get-in-line.php</file>
+	<file>uninstall.php</file>
+	<file>includes</file>
+	<file>views</file>
+
+	<arg value="sp"/>
+	<arg name="extensions" value="php"/>
+
+	<config name="minimum_wp_version" value="5.9"/>
+
+	<rule ref="WordPress-Extra">
+		<exclude name="WordPress.DB.DirectDatabaseQuery.DirectQuery"/>
+		<exclude name="WordPress.DB.DirectDatabaseQuery.NoCaching"/>
+		<exclude name="WordPress.DB.DirectDatabaseQuery.SchemaChange"/>
+	</rule>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="get-in-line"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="get_in_line"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>
