@@ -1,124 +1,171 @@
-<?php 
-    require_once( GET_IN_LINE_PATH . "functions/functions.php" );      
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo(get_bloginfo( 'name' ))?> - Lobby</title>    
-    <style type="text/css">
-      #countdown {
-        position: relative;
-        margin: auto;
-        margin-top: 40px;
-        height: 40px;
-        width: 40px;
-        text-align: center;
-      }
-      #countdown-number {
-        color: white;
-        display: inline-block;
-        line-height: 40px;
-      }
-      svg {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 40px;
-        height: 40px;
-        transform: rotateY(-180deg) rotateZ(-90deg);
-      }
-      svg circle {
-        stroke-dasharray: 113px;
-        stroke-dashoffset: 0px;
-        stroke-linecap: round;
-        stroke-width: 2px;
-        stroke: white;
-        fill: none;
-        animation: countdown 15s linear infinite forwards;
-      }
-      @keyframes countdown {
-        from {
-            stroke-dashoffset: 0px;
-      }
-        to {
-            stroke-dashoffset: 113px;
-      }
-      }
-      .container {
-        color: whitesmoke;
-        padding: 100px;
-        font-family: 'Oxygen', sans-serif;
-        text-align: center;
-      }
-      html {
-        height: 100%;
-      }
-      body {
-        min-height: 100%;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-      }
-      p{
-        padding-top: 50px;
-      }
+<html <?php language_attributes(); ?>>
+<head>
+	<meta charset="<?php bloginfo( 'charset' ); ?>" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="robots" content="noindex" />
+	<title><?php echo esc_html( get_bloginfo( 'name' ) ); ?> &middot; <?php esc_html_e( 'Waiting room', 'get-in-line' ); ?></title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		html,
+		body {
+			height: 100%;
+		}
+		body {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+			background: radial-gradient(circle at 20% 20%, #1e293b 0%, #0f172a 55%, #020617 100%);
+			color: #e2e8f0;
+			padding: 24px;
+		}
+		.gil-card {
+			width: 100%;
+			max-width: 480px;
+			background: rgba(15, 23, 42, 0.75);
+			border: 1px solid rgba(148, 163, 184, 0.25);
+			border-radius: 16px;
+			padding: 48px 40px;
+			text-align: center;
+			box-shadow: 0 24px 60px rgba(2, 6, 23, 0.6);
+		}
+		.gil-site {
+			font-size: 14px;
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			color: #94a3b8;
+			margin-bottom: 12px;
+		}
+		h1 {
+			font-size: 26px;
+			font-weight: 600;
+			margin-bottom: 16px;
+			color: #f8fafc;
+		}
+		.gil-lead {
+			font-size: 15px;
+			line-height: 1.6;
+			color: #cbd5e1;
+			margin-bottom: 32px;
+		}
+		.gil-stats {
+			display: flex;
+			justify-content: center;
+			gap: 40px;
+			margin-bottom: 32px;
+		}
+		.gil-stat-value {
+			font-size: 40px;
+			font-weight: 700;
+			color: #f8fafc;
+			line-height: 1.2;
+		}
+		.gil-stat-label {
+			font-size: 12px;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: #94a3b8;
+			margin-top: 6px;
+		}
+		.gil-ring {
+			position: relative;
+			width: 44px;
+			height: 44px;
+			margin: 0 auto 20px;
+		}
+		.gil-ring svg {
+			width: 44px;
+			height: 44px;
+			transform: rotate(-90deg);
+		}
+		.gil-ring circle {
+			fill: none;
+			stroke-width: 3;
+		}
+		.gil-ring .gil-ring-track {
+			stroke: rgba(148, 163, 184, 0.25);
+		}
+		.gil-ring .gil-ring-progress {
+			stroke: #38bdf8;
+			stroke-linecap: round;
+			stroke-dasharray: 119.4;
+			animation: gil-countdown 5s linear infinite;
+		}
+		@keyframes gil-countdown {
+			from { stroke-dashoffset: 0; }
+			to { stroke-dashoffset: 119.4; }
+		}
+		.gil-fine {
+			font-size: 13px;
+			line-height: 1.6;
+			color: #64748b;
+		}
+	</style>
+</head>
+<body>
+	<main class="gil-card">
+		<div class="gil-site"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></div>
+		<h1><?php esc_html_e( 'You are in line', 'get-in-line' ); ?></h1>
+		<p class="gil-lead"><?php esc_html_e( 'We are welcoming a high number of visitors right now. To keep the site fast for everyone, access is briefly limited. Your spot is saved.', 'get-in-line' ); ?></p>
 
-    </style>
-    
-  </head>
-  <body style="background-image: url('<?php echo(GET_IN_LINE_URL . 'assets/images/lobby.jpg') ?>');">
-    <div class="position-relative container">
-      <h1 class="z-index-1 position-relative">        
-        <?php _e('Welcome to ' . get_bloginfo( 'name' ), 'gil')?>
-      </h1>
-      <div>
-        <p>
-          <?php _e("We are having a high number of visitors and we limited the access to the site to better serve you.", 'gil') ?>
-        </p>
-        <p>
-          <?php _e("You're the number ", 'gil') ?>  
-          <?php echo(get_in_line_position_in_queue()); ?> 
-          <?php _e(" in the line; the waiting time is approximately ", 'gil') ?>  
-          <?php _e(get_in_line_waiting_time()); ?> 
-          <?php _e(" minutes.", 'gil') ?>  
-        </p>
+		<div class="gil-stats">
+			<div>
+				<div class="gil-stat-value" id="gil-position"><?php echo esc_html( $position ); ?></div>
+				<div class="gil-stat-label"><?php esc_html_e( 'Your place in line', 'get-in-line' ); ?></div>
+			</div>
+			<div>
+				<div class="gil-stat-value"><span id="gil-wait"><?php echo esc_html( $estimated_wait_minutes ); ?></span></div>
+				<div class="gil-stat-label"><?php esc_html_e( 'Est. wait (minutes)', 'get-in-line' ); ?></div>
+			</div>
+		</div>
 
-        <p>
-        <?php 
-          _e("This page will reload automatically and you won't lose your position
-              in the queue if you leave and come back within the session limit time.", 'gil') 
-        ?>            
-        </p>
-      </div>
-      <div id="countdown">
-        <div id="countdown-number"></div>
-        <svg>
-          <circle r="18" cx="20" cy="20"></circle>
-        </svg>
-      </div>
-    </div>    
-    <script>
-      setTimeout(function () {
-        window.location.reload();
-      }, 15000);
+		<div class="gil-ring">
+			<svg viewBox="0 0 44 44">
+				<circle class="gil-ring-track" r="19" cx="22" cy="22"></circle>
+				<circle class="gil-ring-progress" r="19" cx="22" cy="22"></circle>
+			</svg>
+		</div>
 
-      var countdownNumberEl = document.getElementById("countdown-number");
-      var countdown = 15;
+		<p class="gil-fine"><?php esc_html_e( 'This page checks your status automatically and will let you in as soon as a spot opens. You can leave and come back without losing your place.', 'get-in-line' ); ?></p>
+	</main>
 
-      countdownNumberEl.textContent = countdown;
+	<script>
+		( function () {
+			var endpoint = <?php echo wp_json_encode( esc_url_raw( $status_endpoint ) ); ?>;
+			var positionEl = document.getElementById( 'gil-position' );
+			var waitEl = document.getElementById( 'gil-wait' );
 
-      setInterval(function () {
-        countdown = --countdown <= 0 ? 15 : countdown;
+			function poll() {
+				fetch( endpoint, { credentials: 'same-origin', cache: 'no-store' } )
+					.then( function ( response ) {
+						return response.json();
+					} )
+					.then( function ( data ) {
+						if ( 'admitted' === data.status ) {
+							window.location.reload();
+							return;
+						}
+						if ( 'waiting' === data.status ) {
+							positionEl.textContent = data.position;
+							waitEl.textContent = data.estimated_wait_minutes;
+						}
+					} )
+					.catch( function () {} );
+			}
 
-        countdownNumberEl.textContent = countdown;
-      }, 1000);
-
-    </script>
-  </body>
+			setInterval( poll, 5000 );
+		} )();
+	</script>
+</body>
 </html>
-
-
-<?php exit(); ?>
