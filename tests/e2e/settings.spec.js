@@ -10,12 +10,31 @@ test.describe( 'Settings page', () => {
 		await loginAsAdmin( page );
 	} );
 
-	test( 'shows current values and live queue counts', async ( { page } ) => {
+	test( 'shows current values, status line, and live queue counts', async ( { page } ) => {
 		await page.goto( SETTINGS_URL );
 
+		await expect( page.locator( '.gil-status-line' ) ).toContainText( 'Waiting room is active' );
 		await expect( page.locator( '#gil_enabled' ) ).toBeChecked();
 		await expect( page.locator( '#gil_limit' ) ).toHaveValue( '100' );
 		await expect( page.locator( '#gil_expiration' ) ).toHaveValue( '20' );
+		await expect( page.locator( '#gil-admitted-count' ) ).toHaveText( '0' );
+		await expect( page.locator( '#gil-waiting-count' ) ).toHaveText( '0' );
+	} );
+
+	test( 'preview link opens the lobby with sample data without enqueuing anyone', async ( { page, context } ) => {
+		await page.goto( SETTINGS_URL );
+
+		const [ previewPage ] = await Promise.all( [
+			context.waitForEvent( 'page' ),
+			page.click( '.gil-preview-link' ),
+		] );
+
+		await expect( previewPage.locator( '.gil-card' ) ).toBeVisible();
+		await expect( previewPage.locator( '#gil-position' ) ).toHaveText( '47' );
+		await expect( previewPage.locator( '#gil-wait' ) ).toHaveText( '12' );
+		await previewPage.close();
+
+		await page.reload();
 		await expect( page.locator( '#gil-admitted-count' ) ).toHaveText( '0' );
 		await expect( page.locator( '#gil-waiting-count' ) ).toHaveText( '0' );
 	} );

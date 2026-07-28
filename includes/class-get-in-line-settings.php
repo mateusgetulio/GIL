@@ -6,20 +6,60 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Get_In_Line_Settings {
 
+	private $page_hook = '';
+
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_post_get_in_line_clear_queue', array( $this, 'handle_clear_queue' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 	}
 
 	public function add_menu() {
-		add_menu_page(
+		$this->page_hook = add_menu_page(
 			esc_html__( 'Get in Line', 'get-in-line' ),
 			esc_html__( 'Get in Line', 'get-in-line' ),
 			'manage_options',
 			'get-in-line',
 			array( $this, 'render_settings_page' ),
 			'dashicons-groups'
+		);
+	}
+
+	public function enqueue_assets( $hook ) {
+		if ( $hook !== $this->page_hook ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			'get-in-line-admin',
+			GET_IN_LINE_URL . 'assets/css/admin.css',
+			array(),
+			GET_IN_LINE_VERSION
+		);
+
+		wp_enqueue_script(
+			'get-in-line-admin',
+			GET_IN_LINE_URL . 'assets/js/admin.js',
+			array(),
+			GET_IN_LINE_VERSION,
+			true
+		);
+
+		wp_localize_script(
+			'get-in-line-admin',
+			'getInLineAdmin',
+			array(
+				'endpoint' => esc_url_raw( rest_url( 'get-in-line/v1/admin/status' ) ),
+				'nonce'    => wp_create_nonce( 'wp_rest' ),
+				'strings'  => array(
+					'justNow'      => __( 'Updated just now', 'get-in-line' ),
+					/* translators: %d: number of seconds. */
+					'secondsAgo'   => __( 'Updated %ds ago', 'get-in-line' ),
+					/* translators: 1: admitted visitor count, 2: waiting visitor count. */
+					'announcement' => __( '%1$s visitors admitted, %2$s waiting in line.', 'get-in-line' ),
+				),
+			)
 		);
 	}
 
@@ -70,22 +110,23 @@ class Get_In_Line_Settings {
 		?>
 		<input type="checkbox" name="<?php echo esc_attr( Get_In_Line_Options::OPTION_KEY ); ?>[gil_enabled]" id="gil_enabled" value="1" <?php checked( 1, (int) $options['gil_enabled'] ); ?> />
 		<label for="gil_enabled"><?php esc_html_e( 'Limit concurrent access to the site', 'get-in-line' ); ?></label>
+		<p class="description"><?php esc_html_e( 'Logged-in administrators are never sent to the waiting room, so you cannot lock yourself out.', 'get-in-line' ); ?></p>
 		<?php
 	}
 
 	public function render_limit_field() {
 		$options = Get_In_Line_Options::all();
 		?>
-		<input type="number" min="1" name="<?php echo esc_attr( Get_In_Line_Options::OPTION_KEY ); ?>[gil_limit]" id="gil_limit" value="<?php echo esc_attr( $options['gil_limit'] ); ?>">
-		<p class="description"><?php esc_html_e( 'How many visitors may browse the site at the same time.', 'get-in-line' ); ?></p>
+		<input type="number" min="1" step="1" class="small-text" name="<?php echo esc_attr( Get_In_Line_Options::OPTION_KEY ); ?>[gil_limit]" id="gil_limit" value="<?php echo esc_attr( $options['gil_limit'] ); ?>">
+		<p class="description"><?php esc_html_e( 'How many visitors may browse the site at the same time. Start around 100 for typical shared hosting and adjust based on your server.', 'get-in-line' ); ?></p>
 		<?php
 	}
 
 	public function render_expiration_field() {
 		$options = Get_In_Line_Options::all();
 		?>
-		<input type="number" min="1" name="<?php echo esc_attr( Get_In_Line_Options::OPTION_KEY ); ?>[gil_expiration]" id="gil_expiration" value="<?php echo esc_attr( $options['gil_expiration'] ); ?>">
-		<p class="description"><?php esc_html_e( 'How long an admitted visitor keeps their spot before it is freed for the next in line.', 'get-in-line' ); ?></p>
+		<input type="number" min="1" step="1" class="small-text" name="<?php echo esc_attr( Get_In_Line_Options::OPTION_KEY ); ?>[gil_expiration]" id="gil_expiration" value="<?php echo esc_attr( $options['gil_expiration'] ); ?>">
+		<p class="description"><?php esc_html_e( 'How long an admitted visitor keeps their spot before it is freed for the next in line. Shorter sessions move the line faster.', 'get-in-line' ); ?></p>
 		<?php
 	}
 
@@ -158,7 +199,10 @@ class Get_In_Line_Settings {
 		$show_saved_notice = isset( $_GET['settings-updated'] )
 			&& empty( get_settings_errors( Get_In_Line_Options::OPTION_KEY ) );
 
-		$counts = Get_In_Line_Queue::counts();
+		$counts      = Get_In_Line_Queue::counts();
+		$enabled     = Get_In_Line_Options::enabled();
+		$limit       = Get_In_Line_Options::limit();
+		$preview_url = Get_In_Line_Gate::preview_url();
 
 		include GET_IN_LINE_PATH . 'views/settings-page.php';
 	}

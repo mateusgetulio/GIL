@@ -6,6 +6,8 @@ A virtual waiting room for WordPress. When traffic exceeds what your server can 
 
 ![The waiting room lobby](docs/screenshots/lobby.png)
 
+The lobby follows the visitor's system theme (here is [light mode](docs/screenshots/lobby-light.png)) and is fully self-contained: inline CSS and vanilla JS, system fonts, no external requests, so it renders instantly on any site under any branding.
+
 ![The settings page with a live queue](docs/screenshots/settings.png)
 
 ## What it does
@@ -15,7 +17,8 @@ A virtual waiting room for WordPress. When traffic exceeds what your server can 
 - The lobby polls a REST status endpoint every 5 seconds and admits the visitor automatically the moment a spot opens.
 - The lobby is served with HTTP 503 and `Retry-After`, so search engines understand the site is temporarily busy and never index the queue page.
 - Administrators are never gated, so you cannot lock yourself out.
-- Live admitted/waiting counts and a nonce-protected queue reset on the settings page.
+- Live admitted/waiting counts on the settings page (auto-updating every 10 seconds), a one-glance active/off status line, a lobby preview link, and a nonce-protected queue reset.
+- Accessible by design: screen readers announce queue progress via a live region, animations respect `prefers-reduced-motion`, and the lobby adapts to light and dark system themes.
 
 What it is not: DDoS protection. Requests still reach PHP; the plugin decides who may browse. It also cannot gate requests that a full-page cache or CDN answers without hitting WordPress.
 
@@ -98,14 +101,13 @@ composer lint              # PHPCS, WordPress coding standards
 | Automatic FIFO promotion when a session expires, lobby self-admits | `tests/e2e/gate.spec.js` |
 | Cap holds under a 20-parallel-visitor burst | `tests/e2e/concurrency.spec.js` |
 | Administrators bypass the gate at capacity | `tests/e2e/admin-bypass.spec.js` |
-| Settings save, server-side validation, live counts | `tests/e2e/settings.spec.js` |
+| Settings save, server-side validation, live counts, lobby preview | `tests/e2e/settings.spec.js` |
 | Nonce-protected queue clearing from the admin | `tests/e2e/clear-queue.spec.js` |
 
 CI runs PHPCS and the full e2e suite (wp-env + Playwright) on every push.
 
 ## Roadmap
 
-- Customizable lobby copy and colors from the settings page.
 - A hook to end a session early (for example after checkout), returning the slot to the pool sooner.
 - Crawler allowlist so search engine bots are never queued.
 - Opt-in queue analytics: peak depth, average wait, admissions per hour.

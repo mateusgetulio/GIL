@@ -16,6 +16,29 @@ class Get_In_Line_Rest {
 				'permission_callback' => '__return_true',
 			)
 		);
+
+		register_rest_route(
+			'get-in-line/v1',
+			'/admin/status',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( __CLASS__, 'admin_status' ),
+				'permission_callback' => array( __CLASS__, 'can_manage' ),
+			)
+		);
+	}
+
+	public static function can_manage() {
+		return current_user_can( 'manage_options' );
+	}
+
+	public static function admin_status() {
+		Get_In_Line_Queue::maintain();
+
+		$response = new WP_REST_Response( Get_In_Line_Queue::counts() );
+		$response->header( 'Cache-Control', 'no-store' );
+
+		return $response;
 	}
 
 	public static function status() {

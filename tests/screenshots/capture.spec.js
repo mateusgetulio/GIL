@@ -1,5 +1,5 @@
 const { test } = require( '@playwright/test' );
-const { setOptions, resetQueue, loginAsAdmin } = require( '../e2e/helpers' );
+const { wpCli, setOptions, resetQueue, loginAsAdmin } = require( '../e2e/helpers' );
 
 const OUTPUT_DIR = 'docs/screenshots';
 
@@ -9,24 +9,27 @@ test.describe( 'Screenshot capture', () => {
 		resetQueue();
 	} );
 
-	test( 'lobby, desktop and mobile', async ( { browser } ) => {
-		const admittedContext = await browser.newContext();
-		const admittedPage = await admittedContext.newPage();
-		await admittedPage.goto( '/' );
+	test( 'lobby via preview, desktop and mobile', async ( { page } ) => {
+		wpCli( [ 'option', 'update', 'blogname', 'Northwind Records' ] );
+		try {
+			await loginAsAdmin( page );
+			await page.goto( '/wp-admin/admin.php?page=get-in-line' );
+			const previewUrl = await page.locator( '.gil-preview-link' ).getAttribute( 'href' );
 
-		const desktopContext = await browser.newContext( { viewport: { width: 1280, height: 800 } } );
-		const desktopPage = await desktopContext.newPage();
-		await desktopPage.goto( '/' );
-		await desktopPage.screenshot( { path: `${ OUTPUT_DIR }/lobby.png` } );
-		await desktopContext.close();
+			await page.setViewportSize( { width: 1280, height: 800 } );
+			await page.emulateMedia( { colorScheme: 'dark' } );
+			await page.goto( previewUrl );
+			await page.screenshot( { path: `${ OUTPUT_DIR }/lobby.png` } );
 
-		const mobileContext = await browser.newContext( { viewport: { width: 390, height: 844 } } );
-		const mobilePage = await mobileContext.newPage();
-		await mobilePage.goto( '/' );
-		await mobilePage.screenshot( { path: `${ OUTPUT_DIR }/lobby-mobile.png` } );
-		await mobileContext.close();
+			await page.emulateMedia( { colorScheme: 'light' } );
+			await page.screenshot( { path: `${ OUTPUT_DIR }/lobby-light.png` } );
 
-		await admittedContext.close();
+			await page.emulateMedia( { colorScheme: 'dark' } );
+			await page.setViewportSize( { width: 390, height: 844 } );
+			await page.screenshot( { path: `${ OUTPUT_DIR }/lobby-mobile.png` } );
+		} finally {
+			wpCli( [ 'option', 'update', 'blogname', 'GIL' ] );
+		}
 	} );
 
 	test( 'settings page with a live queue', async ( { browser, page } ) => {

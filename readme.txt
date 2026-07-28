@@ -21,7 +21,9 @@ Get in Line creates a virtual waiting room in front of your site. You choose how
 * Each visitor gets a signed, HttpOnly cookie so their place in line survives reloads and short absences.
 * Admission is atomic at the database level, so the limit holds even under bursts of concurrent traffic.
 * Admitted visitors keep their spot for a session length you configure; when it expires, the spot goes to the next person in line.
-* The lobby page polls a lightweight status endpoint every few seconds and lets the visitor in the moment they are admitted.
+* The lobby page polls a lightweight status endpoint every few seconds, shows live progress, and lets the visitor in the moment they are admitted.
+* The lobby adapts to the visitor's light or dark system theme, respects reduced-motion preferences, and announces progress to screen readers.
+* Preview the waiting room from the settings page before enabling it, and watch live admitted/waiting counts during a spike.
 * The lobby is served with HTTP 503 and a Retry-After header, so search engines understand the site is temporarily busy and do not index the lobby.
 * Administrators are never gated, so you cannot lock yourself out.
 
@@ -74,6 +76,7 @@ Only requests that reach PHP can be queued. If a full-page cache or CDN answers 
 * Administrators are never gated.
 * Queue clearing is now nonce-protected; settings are validated server-side.
 * All external assets removed; everything ships with the plugin.
+* Redesigned lobby (light/dark themes, progress bar, reduced-motion and screen-reader support) and settings page (live-updating counts, status line, lobby preview).
 
 = 1.0.0 =
 * Initial release.
